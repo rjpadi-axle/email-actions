@@ -8,6 +8,7 @@ env:
   SEND_EMAIL: true
 jobs:
   another_job:
+    environment: dev
     permissions:
       id-token: write
       contents: read
