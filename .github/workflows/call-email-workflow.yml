@@ -1,13 +1,13 @@
 name: Send Email Workflow Call Parent
-on: [push]
-  # workflow_call:
-  #   inputs:
-  #     job_status:
-  #       required: true
-  #       type: string
-  #     enable_email:
-  #       required: true
-  #       type: boolean
+on:
+  workflow_call:
+    inputs:
+      job_status:
+        required: true
+        type: string
+      enable_email:
+        required: true
+        type: boolean
 
 jobs:
 
