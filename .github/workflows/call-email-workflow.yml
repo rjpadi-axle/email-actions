@@ -12,6 +12,7 @@ on:
 jobs:
 
   send_email:
+    environment: dev
     permissions: write-all
       # contents: write
 
