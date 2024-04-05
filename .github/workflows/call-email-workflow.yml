@@ -13,7 +13,6 @@ jobs:
 
   send_email:
     permissions: write-all
-      # id-token: write
       # contents: write
 
     runs-on: ubuntu-latest
