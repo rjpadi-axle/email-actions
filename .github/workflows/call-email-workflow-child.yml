@@ -15,7 +15,6 @@ jobs:
     permissions: write-all
       # id-token: write
       # contents: write
-      # contents: write
 
     runs-on: ubuntu-latest
     if: ${{ inputs.enable_email }}
