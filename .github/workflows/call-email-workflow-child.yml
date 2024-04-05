@@ -1,0 +1,53 @@
+name: Send Email Workflow Call Child
+on:
+  workflow_call:
+    inputs:
+      job_status:
+        required: true
+        type: string
+      enable_email:
+        required: true
+        type: boolean
+
+jobs:
+
+  send_email:
+    permissions: write-all
+      # id-token: write
+      # contents: write
+      # contents: write
+
+    runs-on: ubuntu-latest
+    if: ${{ inputs.enable_email }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ACTIONS_ROLE }}
+          aws-region: us-east-1
+     
+      - name: Send Email Notification
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TIMESTAMP=$(date -u +'%Y-%m-%dT%H:%M:%S')
+          if [[ "${{ inputs.job_status }}" == "success" ]]; then
+            LINK=$(echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
+            EMAIL_BODY="<p>GitHub Action ${{ github.workflow }} executed in <b>success</b>.</p>  <p>Finished timestamp: <b>$TIMESTAMP</b> </p> <p>GitHub Action Job URL: $LINK</p>"
+            EMAIL_TITLE='Success Alert - GitHub Action ${{ github.workflow }}'
+          elif [[ "${{ inputs.job_status }}" == "failure" ]]; then
+            JOB_ID=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs | jq '.jobs[] | select(.conclusion == "failure") | .id')
+            ERROR_LOG="$(gh api repos/${{ github.repository }}/actions/jobs/$JOB_ID/logs | grep error)"
+            ERROR="${ERROR_LOG#*\[error\]}"
+            LINK=$(echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/$JOB_ID")
+            EMAIL_BODY="<p>GitHub Action ${{ github.workflow }} executed in <b>failure</b>.</p> <p>Error log: <b>$ERROR</b></p> <p>Finished timestamp: <b>$TIMESTAMP</b> </p> <p>GitHub Action Job URL: $LINK</p>"
+            EMAIL_TITLE='Failure Alert - GitHub Action ${{ github.workflow }}'
+          fi
+          aws ses send-email \
+            --from "${{ vars.FROM_ADDRESS }}" \
+            --destination "ToAddresses=${{ vars.TO_ADDRESS }}" \
+            --message "Subject={Data=$EMAIL_TITLE,Charset=utf-8},Body={Html={Data=$EMAIL_BODY,Charset=utf-8}}" \
+            --region us-east-1
