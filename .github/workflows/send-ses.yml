@@ -22,7 +22,6 @@ jobs:
       run: |
         echo "Goodbye Cruel World"
         echo "Github job id: ${{ github.job }}"
-        # exit 127
 
   another_job2:
     runs-on: ubuntu-latest
