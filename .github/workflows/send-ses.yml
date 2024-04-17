@@ -22,8 +22,8 @@ jobs:
       run: |
         echo "Goodbye Cruel World"
         echo "Github job id: ${{ github.job }}"
-        echo "Print env"
-        env
+        echo "Print environment"
+        echo "Current environment: ${{ github.event.inputs.environment }}
 
   another_job2:
     runs-on: ubuntu-latest
