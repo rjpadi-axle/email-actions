@@ -44,7 +44,7 @@ jobs:
             ERROR_LOG="$(gh api repos/${{ github.repository }}/actions/jobs/$JOB_ID/logs | grep error)"
             ERROR="${ERROR_LOG#*\[error\]}"
             LINK=$(echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/$JOB_ID")
-            EMAIL_BODY="<p>GitHub Action ${{ github.workflow }} executed in <b>failure</b>.</p> <p>Error log: <b>$ERROR</b></p> <p>Finished timestamp: <b>$TIMESTAMP</b> </p> <p>GitHub Action Job URL: $LINK</p>"
+            EMAIL_BODY="<p>GitHub Action ${{ github.workflow }} executed in <b>failure</b>.</p> <p>Repo: <b>${{ github.repository }}</b> </p> <p>Environment: <b>$ENVIRONMENT</b> </p> <p>Error log: <b>$ERROR</b></p> <p>Finished timestamp: <b>$TIMESTAMP</b> </p> <p>GitHub Action Job URL: $LINK</p>"
             EMAIL_TITLE='Failure Alert - GitHub Action ${{ github.workflow }}'
           fi
           aws ses send-email \
