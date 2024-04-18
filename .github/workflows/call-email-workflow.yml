@@ -37,7 +37,7 @@ jobs:
           if [[ "${{ inputs.job_status }}" == "success" ]]; then
             LINK=$(echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
             EMAIL_BODY="<p>GitHub Action ${{ github.workflow }} executed in <b>success</b>.</p>  <p>Finished timestamp: <b>$TIMESTAMP</b> </p> <p>GitHub Action Job URL: $LINK</p>"
-            EMAIL_TITLE='Success Alert - GitHub Action ${{ github.workflow }}'
+            EMAIL_TITLE='Success Alert - [${{ github.repository }} - $ENVIRONMENT] GitHub Action ${{ github.workflow }}'
           elif [[ "${{ inputs.job_status }}" == "failure" ]]; then
             JOB_ID=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs | jq '.jobs[] | select(.conclusion == "failure") | .id')
             ERROR_LOG="$(gh api repos/${{ github.repository }}/actions/jobs/$JOB_ID/logs | grep error)"
