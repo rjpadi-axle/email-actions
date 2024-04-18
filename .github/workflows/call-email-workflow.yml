@@ -31,9 +31,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          env
-          echo "repos/${{ github.repository }}/deployments"
-          ENVIRONMENT=$(gh api repos/${{ github.repository }}/deployments/latest | jq )
+          ENVIRONMENT=$(gh api repos/${{ github.repository }}/deployments | jq '.[0]' )
           echo $ENVIRONMENT
           TIMESTAMP=$(date -u +'%Y-%m-%dT%H:%M:%S')
           if [[ "${{ inputs.job_status }}" == "success" ]]; then
