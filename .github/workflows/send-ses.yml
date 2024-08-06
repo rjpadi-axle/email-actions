@@ -55,8 +55,8 @@ jobs:
       run: |
         echo "Github job id: ${{ github.job }}"
         echo "get some JSON:"
-        # result=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs)
-        result=$(aws iam list-groups --output json | jq)
+        result=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs)
+        # result=$(aws iam list-groups --output json | jq)
         echo "result=$result" >> $GITHUB_OUTPUT
 
   call-wf-success:
