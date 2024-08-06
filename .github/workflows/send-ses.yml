@@ -59,7 +59,7 @@ jobs:
     with:
       job_status: success
       enable_email: true
-      result: ${{ needs.another_job2.outputs.result}}
+      result: ${{ needs.another_job2.outputs.result }}
 
   call-wf-failure:
     needs: [another_job, another_job2]
