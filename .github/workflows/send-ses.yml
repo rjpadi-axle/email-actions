@@ -38,7 +38,6 @@ jobs:
       run: |
         echo "Goodbye Cruel World"
         echo "Github job id: ${{ github.job }}"
-        exit 127
 
     - name: Test Step 2
       run: |
