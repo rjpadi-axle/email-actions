@@ -42,6 +42,8 @@ jobs:
     - name: Test Step 2
       run: |
         echo "Github job id: ${{ github.job }}"
+        echo "get some JSON:"
+        gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs
 
   call-wf-success:
     needs: [another_job, another_job2]
