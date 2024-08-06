@@ -34,11 +34,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-      - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ACTIONS_ROLE }}
-          aws-region: us-east-1
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ secrets.AWS_ACTIONS_ROLE }}
+        aws-region: us-east-1
 
     - name: Test Step
       if: ${{ env.SEND_EMAIL == 'true' }}
