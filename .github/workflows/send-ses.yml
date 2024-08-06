@@ -42,7 +42,7 @@ jobs:
         echo "Github job id: ${{ github.job }}"
 
     - name: Test Step 2
-    id: operation
+      id: operation
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
