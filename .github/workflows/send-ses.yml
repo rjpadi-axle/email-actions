@@ -28,6 +28,8 @@ jobs:
   another_job2:
     runs-on: ubuntu-latest
     needs: [another_job]
+    outputs:
+      result: ${{ steps.operation.outputs.result }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -40,12 +42,14 @@ jobs:
         echo "Github job id: ${{ github.job }}"
 
     - name: Test Step 2
+    id: operation
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
         echo "Github job id: ${{ github.job }}"
         echo "get some JSON:"
-        gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs
+        result=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs)
+        echo "result=$result" >> $GITHUB_OUTPUT
 
   call-wf-success:
     needs: [another_job, another_job2]
@@ -55,6 +59,7 @@ jobs:
     with:
       job_status: success
       enable_email: true
+      result: ${{ needs.another_job2.outputs.result}}
 
   call-wf-failure:
     needs: [another_job, another_job2]
