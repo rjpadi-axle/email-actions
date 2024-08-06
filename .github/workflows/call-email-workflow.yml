@@ -5,6 +5,9 @@ on:
       job_status:
         required: true
         type: string
+      result:
+        required: true
+        type: string
       enable_email:
         required: true
         type: boolean
