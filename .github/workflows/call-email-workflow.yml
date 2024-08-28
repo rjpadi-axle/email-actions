@@ -36,6 +36,7 @@ jobs:
         run: |
           ENVIRONMENT=$(gh api repos/${{ github.repository }}/deployments | jq -r '.[0].environment' )
           echo $ENVIRONMENT
+          echo "${{ inputs.result }}"
           TIMESTAMP=$(date -u +'%Y-%m-%dT%H:%M:%S')
           if [[ "${{ inputs.job_status }}" == "success" ]]; then
             LINK=$(echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
