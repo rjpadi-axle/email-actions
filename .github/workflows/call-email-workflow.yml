@@ -36,12 +36,17 @@ jobs:
         run: |
           ENVIRONMENT=$(gh api repos/${{ github.repository }}/deployments | jq -r '.[0].environment' )
           echo $ENVIRONMENT
+          echo .11
           # if echo "${{ inputs.result }}" | jq empty 2>/dev/null; then
           RESULT_TITLE="list of users"
+          echo .21
           LIST=$(echo "${{ inputs.result }}" | jq -r '.Users[].UserName')
+          echo .31
           echo $LIST
+          echo .41
           # fi
           TIMESTAMP=$(date -u +'%Y-%m-%dT%H:%M:%S')
+          echo .51
           echo $LIST
           if [[ "${{ inputs.job_status }}" == "success" ]]; then
             LINK=$(echo "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}")
