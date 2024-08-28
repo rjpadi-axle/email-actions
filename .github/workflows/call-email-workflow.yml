@@ -37,9 +37,9 @@ jobs:
           ENVIRONMENT=$(gh api repos/${{ github.repository }}/deployments | jq -r '.[0].environment' )
           echo $ENVIRONMENT
           # if echo "${{ inputs.result }}" | jq empty 2>/dev/null; then
-            RESULT_TITLE="list of users"
-            LIST=$(echo "${{ inputs.result }}" | jq -r '.Users[].UserName')
-            echo $LIST
+          RESULT_TITLE="list of users"
+          LIST=$(echo "${{ inputs.result }}" | jq -r '.Users[].UserName')
+          echo $LIST
           # fi
           TIMESTAMP=$(date -u +'%Y-%m-%dT%H:%M:%S')
           echo $LIST
