@@ -41,7 +41,7 @@ jobs:
           RESULT_TITLE="list of users"
           echo "${{ inputs.result }}"
           echo .21
-          LIST=$(echo "${{ inputs.result }}" | jq -c . | jq -r '.Users[].UserName')
+          LIST=$(echo '"${{ inputs.result }}"' | jq -c . | jq -r '.Users[].UserName')
           # LIST=$(echo "${{ inputs.result }}")
           echo .31
           echo $LIST
