@@ -40,7 +40,8 @@ jobs:
           # if echo "${{ inputs.result }}" | jq empty 2>/dev/null; then
           RESULT_TITLE="list of users"
           echo .21
-          LIST=$(echo "${{ inputs.result }}" | jq -r '.Users[].UserName')
+          # LIST=$(echo "${{ inputs.result }}" | jq -r '.Users[].UserName')
+          LIST=$(echo "${{ inputs.result }}")
           echo .31
           echo $LIST
           echo .41
